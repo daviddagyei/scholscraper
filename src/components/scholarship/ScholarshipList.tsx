@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Typography,
@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import type { Scholarship } from '../../types/scholarship';
 import ScholarshipCard from './ScholarshipCard';
+import ScholarshipModal from './ScholarshipModal';
 
 interface ScholarshipListProps {
   scholarships: Scholarship[];
@@ -22,7 +23,7 @@ interface ScholarshipListProps {
 }
 
 /**
- * Component for displaying a list of scholarships in a grid layout with consistent card sizes
+ * Component for displaying scholarships with modal details view
  */
 const ScholarshipList: React.FC<ScholarshipListProps> = ({
   scholarships,
@@ -30,6 +31,19 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
   error = null,
   searchStats,
 }) => {
+  const [selectedScholarship, setSelectedScholarship] = useState<Scholarship | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleViewDetails = (scholarship: Scholarship) => {
+    setSelectedScholarship(scholarship);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedScholarship(null);
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -108,7 +122,7 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
         </Box>
       )}
 
-      {/* Scholarship grid with consistent card heights and widths */}
+      {/* Scholarship grid with consistent card sizes */}
       <Grid 
         container 
         spacing={3}
@@ -141,7 +155,10 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
               },
             }}
           >
-            <ScholarshipCard scholarship={scholarship} />
+            <ScholarshipCard 
+              scholarship={scholarship} 
+              onViewDetails={handleViewDetails}
+            />
           </Grid>
         ))}
       </Grid>
@@ -155,8 +172,13 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
           </Typography>
         </Box>
       )}
+
+      {/* Scholarship Detail Modal */}
+      <ScholarshipModal
+        scholarship={selectedScholarship}
+        open={modalOpen}
+        onClose={handleCloseModal}
+      />
     </Box>
   );
 };
-
-export default ScholarshipList;
