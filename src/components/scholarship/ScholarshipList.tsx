@@ -7,7 +7,7 @@ import {
   CircularProgress,
   Paper,
 } from '@mui/material';
-import { Scholarship } from '../../types/scholarship';
+import type { Scholarship } from '../../types/scholarship';
 import ScholarshipCard from './ScholarshipCard';
 
 interface ScholarshipListProps {

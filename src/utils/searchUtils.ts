@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js';
-import { Scholarship } from '../types/scholarship';
+import type { Scholarship } from '../types/scholarship';
 
 /**
  * Configuration for fuzzy search

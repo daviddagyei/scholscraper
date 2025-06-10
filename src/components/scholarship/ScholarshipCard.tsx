@@ -17,7 +17,7 @@ import {
   School as SchoolIcon,
   OpenInNew as LinkIcon,
 } from '@mui/icons-material';
-import { Scholarship } from '../../types/scholarship';
+import type { Scholarship } from '../../types/scholarship';
 import { formatDeadline } from '../../utils/dateUtils';
 
 interface ScholarshipCardProps {

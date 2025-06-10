@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Papa from 'papaparse';
-import { Scholarship, RawScholarshipData } from '../types/scholarship';
+import type { Scholarship, RawScholarshipData } from '../types/scholarship';
 import { parseDate } from '../utils/dateUtils';
 
 /**

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Scholarship, LoadingState } from '../types/scholarship';
+import type { Scholarship, LoadingState } from '../types/scholarship';
 import { dataService } from '../services/dataService';
 
 /**
