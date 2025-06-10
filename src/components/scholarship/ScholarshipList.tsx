@@ -182,3 +182,5 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
     </Box>
   );
 };
+
+export default ScholarshipList
