@@ -108,8 +108,17 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
         </Box>
       )}
 
-      {/* Scholarship grid with consistent card heights */}
-      <Grid container spacing={3}>
+      {/* Scholarship grid with consistent card heights and widths */}
+      <Grid 
+        container 
+        spacing={3}
+        sx={{
+          '& .MuiGrid-item': {
+            display: 'flex',
+            width: '100%',
+          }
+        }}
+      >
         {scholarships.map((scholarship) => (
           <Grid 
             item 
@@ -118,10 +127,18 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
             lg={4} 
             key={scholarship.id}
             sx={{
-              display: 'flex',
-              '& > *': {
-                width: '100%',
-              }
+              display: 'flex !important',
+              width: '100%',
+              maxWidth: {
+                xs: '100%',
+                sm: 'calc(50% - 12px)',
+                lg: 'calc(33.333% - 16px)',
+              },
+              flexBasis: {
+                xs: '100%',
+                sm: 'calc(50% - 12px)',
+                lg: 'calc(33.333% - 16px)',
+              },
             }}
           >
             <ScholarshipCard scholarship={scholarship} />
