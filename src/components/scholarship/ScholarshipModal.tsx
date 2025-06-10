@@ -21,7 +21,6 @@ import {
 import {
   Close as CloseIcon,
   CalendarMonth as CalendarIcon,
-  AttachMoney as MoneyIcon,
   LocationOn as LocationIcon,
   School as SchoolIcon,
   OpenInNew as LinkIcon,

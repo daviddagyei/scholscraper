@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Grid,
   Typography,
   Box,
   Alert,
@@ -122,46 +121,28 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
         </Box>
       )}
 
-      {/* Scholarship grid with consistent card sizes */}
-      <Grid 
-        container 
-        spacing={3}
+      {/* Scholarship grid with CSS Grid layout */}
+      <Box
         sx={{
-          '& .MuiGrid-item': {
-            display: 'flex',
-            width: '100%',
-          }
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            lg: 'repeat(3, 1fr)',
+          },
+          gap: 3,
+          width: '100%',
         }}
       >
         {scholarships.map((scholarship) => (
-          <Grid 
-            item 
-            xs={12} 
-            sm={6} 
-            lg={4} 
-            key={scholarship.id}
-            sx={{
-              display: 'flex !important',
-              width: '100%',
-              maxWidth: {
-                xs: '100%',
-                sm: 'calc(50% - 12px)',
-                lg: 'calc(33.333% - 16px)',
-              },
-              flexBasis: {
-                xs: '100%',
-                sm: 'calc(50% - 12px)',
-                lg: 'calc(33.333% - 16px)',
-              },
-            }}
-          >
+          <Box key={scholarship.id} sx={{ display: 'flex' }}>
             <ScholarshipCard 
               scholarship={scholarship} 
               onViewDetails={handleViewDetails}
             />
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       {/* Additional info for large result sets */}
       {scholarships.length > 12 && (

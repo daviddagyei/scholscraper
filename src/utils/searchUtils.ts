@@ -1,10 +1,10 @@
-import Fuse from 'fuse.js';
+import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { Scholarship } from '../types/scholarship';
 
 /**
  * Configuration for fuzzy search
  */
-const fuseOptions: Fuse.IFuseOptions<Scholarship> = {
+const fuseOptions: IFuseOptions<Scholarship> = {
   keys: [
     { name: 'title', weight: 0.4 },
     { name: 'description', weight: 0.3 },

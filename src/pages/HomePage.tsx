@@ -5,9 +5,7 @@ import {
   Alert,
   Button,
   Stack,
-  Container,
   Paper,
-  Grid,
   Fade,
 } from '@mui/material';
 import {
@@ -86,69 +84,70 @@ const HomePage: React.FC = () => {
             >
               Discover funding opportunities for your education. Search through our comprehensive 
               database of scholarships, grants, and financial aid programs.
-            </Typography>
-
-            {/* Stats Cards */}
+            </Typography>            {/* Stats Cards */}
             {!isLoading && scholarships.length > 0 && (
-              <Grid container spacing={3} sx={{ mb: 4, maxWidth: 800, mx: 'auto' }}>
-                <Grid item xs={12} sm={4}>
-                  <Paper 
-                    elevation={0}
-                    sx={{ 
-                      p: 3, 
-                      textAlign: 'center',
-                      background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-                      border: '1px solid #bae6fd',
-                    }}
-                  >
-                    <SchoolIcon sx={{ fontSize: 32, color: 'primary.main', mb: 1 }} />
-                    <Typography variant="h4" fontWeight="bold" color="primary.main">
-                      {scholarships.length}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Scholarships Available
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Paper 
-                    elevation={0}
-                    sx={{ 
-                      p: 3, 
-                      textAlign: 'center',
-                      background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-                      border: '1px solid #bbf7d0',
-                    }}
-                  >
-                    <MoneyIcon sx={{ fontSize: 32, color: 'success.main', mb: 1 }} />
-                    <Typography variant="h4" fontWeight="bold" color="success.main">
-                      ${(totalValue / 1000).toFixed(0)}K+
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Total Value Available
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Paper 
-                    elevation={0}
-                    sx={{ 
-                      p: 3, 
-                      textAlign: 'center',
-                      background: 'linear-gradient(135deg, #fefce8 0%, #fef3c7 100%)',
-                      border: '1px solid #fde68a',
-                    }}
-                  >
-                    <TrendingUpIcon sx={{ fontSize: 32, color: 'warning.main', mb: 1 }} />
-                    <Typography variant="h4" fontWeight="bold" color="warning.main">
-                      {filterOptions.categories.length}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Categories
-                    </Typography>
-                  </Paper>
-                </Grid>
-              </Grid>
+              <Box 
+                sx={{ 
+                  mb: 4, 
+                  maxWidth: 800, 
+                  mx: 'auto',
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+                  gap: 3,
+                }}
+              >
+                <Paper 
+                  elevation={0}
+                  sx={{ 
+                    p: 3, 
+                    textAlign: 'center',
+                    background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+                    border: '1px solid #bae6fd',
+                  }}
+                >
+                  <SchoolIcon sx={{ fontSize: 32, color: 'primary.main', mb: 1 }} />
+                  <Typography variant="h4" fontWeight="bold" color="primary.main">
+                    {scholarships.length}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Scholarships Available
+                  </Typography>
+                </Paper>
+                <Paper 
+                  elevation={0}
+                  sx={{ 
+                    p: 3, 
+                    textAlign: 'center',
+                    background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+                    border: '1px solid #bbf7d0',
+                  }}
+                >
+                  <MoneyIcon sx={{ fontSize: 32, color: 'success.main', mb: 1 }} />
+                  <Typography variant="h4" fontWeight="bold" color="success.main">
+                    ${(totalValue / 1000).toFixed(0)}K+
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Total Value Available
+                  </Typography>
+                </Paper>
+                <Paper 
+                  elevation={0}
+                  sx={{ 
+                    p: 3, 
+                    textAlign: 'center',
+                    background: 'linear-gradient(135deg, #fefce8 0%, #fef3c7 100%)',
+                    border: '1px solid #fde68a',
+                  }}
+                >
+                  <TrendingUpIcon sx={{ fontSize: 32, color: 'warning.main', mb: 1 }} />
+                  <Typography variant="h4" fontWeight="bold" color="warning.main">
+                    {filterOptions.categories.length}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Categories
+                  </Typography>
+                </Paper>
+              </Box>
             )}
             
             {/* Info Alert */}

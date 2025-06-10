@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Container, Box, IconButton } from '@mui/material';
-import { School as SchoolIcon, Search as SearchIcon } from '@mui/icons-material';
+import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
+import { School as SchoolIcon } from '@mui/icons-material';
 
 interface HeaderProps {
   title?: string;

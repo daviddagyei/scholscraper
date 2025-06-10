@@ -14,7 +14,6 @@ import {
   CalendarMonth as CalendarIcon,
   AttachMoney as MoneyIcon,
   LocationOn as LocationIcon,
-  School as SchoolIcon,
   Visibility as ViewIcon,
   CheckCircle as CheckIcon,
 } from '@mui/icons-material';

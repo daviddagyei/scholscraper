@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Paper,
-  Grid,
   FormControl,
   InputLabel,
   Select,
@@ -11,7 +10,6 @@ import {
   Box,
   Typography,
   Chip,
-  Stack,
   Divider,
   Accordion,
   AccordionSummary,
@@ -60,9 +58,9 @@ const FilterControls: React.FC<FilterControlsProps> = ({
 
   const FilterContent = () => (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Grid container spacing={2}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
         {/* Category Filter */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ flex: '1 1 200px', minWidth: '200px' }}>
           <FormControl fullWidth size="small">
             <InputLabel>Category</InputLabel>
             <Select
@@ -78,10 +76,10 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               ))}
             </Select>
           </FormControl>
-        </Grid>
+        </Box>
 
         {/* Location Filter */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ flex: '1 1 200px', minWidth: '200px' }}>
           <FormControl fullWidth size="small">
             <InputLabel>Location</InputLabel>
             <Select
@@ -97,10 +95,10 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               ))}
             </Select>
           </FormControl>
-        </Grid>
+        </Box>
 
         {/* Amount Range */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ flex: '1 1 150px', minWidth: '150px' }}>
           <TextField
             fullWidth
             size="small"
@@ -110,9 +108,9 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             onChange={(e) => onFiltersChange({ minAmount: Number(e.target.value) || 0 })}
             inputProps={{ min: 0 }}
           />
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ flex: '1 1 150px', minWidth: '150px' }}>
           <TextField
             fullWidth
             size="small"
@@ -122,10 +120,10 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             onChange={(e) => onFiltersChange({ maxAmount: Number(e.target.value) || 100000 })}
             inputProps={{ min: 0 }}
           />
-        </Grid>
+        </Box>
 
         {/* Date Range */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ flex: '1 1 180px', minWidth: '180px' }}>
           <DatePicker
             label="Deadline From"
             value={filters.deadlineFrom}
@@ -137,9 +135,9 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               },
             }}
           />
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ flex: '1 1 180px', minWidth: '180px' }}>
           <DatePicker
             label="Deadline To"
             value={filters.deadlineTo}
@@ -151,10 +149,10 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               },
             }}
           />
-        </Grid>
+        </Box>
 
         {/* Eligibility Filter */}
-        <Grid item xs={12} md={6}>
+        <Box sx={{ flex: '1 1 250px', minWidth: '250px' }}>
           <FormControl fullWidth size="small">
             <InputLabel>Eligibility</InputLabel>
             <Select
@@ -181,29 +179,27 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               ))}
             </Select>
           </FormControl>
-        </Grid>
+        </Box>
 
         {/* Reset Button */}
-        <Grid item xs={12} md={6}>
-          <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              startIcon={<ClearIcon />}
-              onClick={onReset}
-              disabled={!hasActiveFilters}
-              sx={{ textTransform: 'none' }}
-            >
-              Reset Filters
-            </Button>
-            {hasActiveFilters && (
-              <Typography variant="caption" color="primary" sx={{ ml: 2 }}>
-                Filters active
-              </Typography>
-            )}
-          </Box>
-        </Grid>
-      </Grid>
+        <Box sx={{ flex: '1 1 200px', minWidth: '200px', display: 'flex', alignItems: 'center' }}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={<ClearIcon />}
+            onClick={onReset}
+            disabled={!hasActiveFilters}
+            sx={{ textTransform: 'none' }}
+          >
+            Reset Filters
+          </Button>
+          {hasActiveFilters && (
+            <Typography variant="caption" color="primary" sx={{ ml: 2 }}>
+              Active
+            </Typography>
+          )}
+        </Box>
+      </Box>
     </LocalizationProvider>
   );
 
