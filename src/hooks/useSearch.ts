@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Scholarship, SearchFilters } from '../types/scholarship';
+import type { Scholarship, SearchFilters } from '../types/scholarship';
 import { searchScholarships } from '../utils/searchUtils';
 import { isDateInRange } from '../utils/dateUtils';
 
