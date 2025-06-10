@@ -11,7 +11,7 @@ class DataService {
 
   constructor(csvUrl?: string) {
     // Default to a sample URL - replace with your actual Google Sheets CSV URL
-    this.csvUrl = csvUrl || process.env.REACT_APP_SHEETS_URL || '';
+    this.csvUrl = csvUrl || import.meta.env.VITE_REACT_APP_SHEETS_URL || '';
   }
 
   /**
