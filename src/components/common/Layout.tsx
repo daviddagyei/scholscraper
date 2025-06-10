@@ -8,15 +8,30 @@ interface LayoutProps {
 }
 
 /**
- * Main layout component that wraps the entire application
+ * Main layout component with modern spacing and structure
  */
 const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+    <Box 
+      sx={{ 
+        minHeight: '100vh', 
+        backgroundColor: 'background.default',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Header title={title} />
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        {children}
-      </Container>
+      <Box sx={{ flex: 1 }}>
+        <Container 
+          maxWidth="xl" 
+          sx={{ 
+            py: { xs: 3, sm: 4, md: 6 },
+            px: { xs: 2, sm: 3 },
+          }}
+        >
+          {children}
+        </Container>
+      </Box>
     </Box>
   );
 };

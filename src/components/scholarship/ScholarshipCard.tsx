@@ -9,6 +9,7 @@ import {
   Box,
   Stack,
   Divider,
+  Avatar,
 } from '@mui/material';
 import {
   CalendarMonth as CalendarIcon,
@@ -16,6 +17,7 @@ import {
   LocationOn as LocationIcon,
   School as SchoolIcon,
   OpenInNew as LinkIcon,
+  CheckCircle as CheckIcon,
 } from '@mui/icons-material';
 import type { Scholarship } from '../../types/scholarship';
 import { formatDeadline } from '../../utils/dateUtils';
@@ -25,7 +27,7 @@ interface ScholarshipCardProps {
 }
 
 /**
- * Card component for displaying individual scholarship information
+ * Modern scholarship card with enhanced visual design
  */
 const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
   const { text: deadlineText, isUrgent } = formatDeadline(scholarship.deadline);
@@ -36,85 +38,167 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
     }
   };
 
+  // Generate a color for the provider avatar
+  const getProviderColor = (provider: string) => {
+    const colors = ['#2563eb', '#7c3aed', '#059669', '#dc2626', '#ea580c'];
+    const index = provider.length % colors.length;
+    return colors[index];
+  };
+
   return (
     <Card 
-      elevation={2} 
+      elevation={0}
       sx={{ 
         height: '100%', 
         display: 'flex', 
         flexDirection: 'column',
-        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        border: '1px solid #e2e8f0',
+        borderRadius: 3,
+        overflow: 'hidden',
         '&:hover': {
-          transform: 'translateY(-4px)',
-          boxShadow: 6,
+          transform: 'translateY(-8px)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          borderColor: 'primary.main',
         },
       }}
     >
-      <CardContent sx={{ flexGrow: 1 }}>
-        {/* Header with title and category */}
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h6" component="h3" gutterBottom>
-            {scholarship.title}
-          </Typography>
-          <Chip 
-            label={scholarship.category} 
-            size="small" 
-            color="primary" 
-            variant="outlined"
-          />
+      {/* Header with gradient background */}
+      <Box
+        sx={{
+          background: `linear-gradient(135deg, ${getProviderColor(scholarship.provider)}15 0%, ${getProviderColor(scholarship.provider)}25 100%)`,
+          p: 3,
+          pb: 2,
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
+          <Avatar
+            sx={{
+              bgcolor: getProviderColor(scholarship.provider),
+              width: 48,
+              height: 48,
+              fontSize: '1.2rem',
+              fontWeight: 600,
+            }}
+          >
+            {scholarship.provider.charAt(0)}
+          </Avatar>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 1 }}>
+              {scholarship.title}
+            </Typography>
+            <Chip 
+              label={scholarship.category} 
+              size="small" 
+              sx={{
+                backgroundColor: getProviderColor(scholarship.provider),
+                color: 'white',
+                fontWeight: 500,
+              }}
+            />
+          </Box>
         </Box>
+      </Box>
 
+      <CardContent sx={{ flexGrow: 1, pt: 0 }}>
         {/* Description */}
         <Typography 
           variant="body2" 
           color="text.secondary" 
-          sx={{ mb: 2, lineHeight: 1.5 }}
+          sx={{ 
+            mb: 3, 
+            lineHeight: 1.6,
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}
         >
-          {scholarship.description.length > 150 
-            ? `${scholarship.description.substring(0, 150)}...`
-            : scholarship.description
-          }
+          {scholarship.description}
         </Typography>
 
-        <Divider sx={{ my: 2 }} />
-
-        {/* Key details */}
-        <Stack spacing={1.5}>
-          {/* Amount */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <MoneyIcon color="success" fontSize="small" />
-            <Typography variant="body2" fontWeight="medium">
+        {/* Key details with modern icons */}
+        <Stack spacing={2}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 32,
+                height: 32,
+                borderRadius: 1,
+                backgroundColor: 'success.light',
+                color: 'success.contrastText',
+              }}
+            >
+              <MoneyIcon fontSize="small" />
+            </Box>
+            <Typography variant="body1" fontWeight="600" color="success.main">
               {scholarship.amount}
             </Typography>
           </Box>
 
-          {/* Deadline */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <CalendarIcon 
-              color={isUrgent ? 'error' : 'primary'} 
-              fontSize="small" 
-            />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 32,
+                height: 32,
+                borderRadius: 1,
+                backgroundColor: isUrgent ? 'error.light' : 'primary.light',
+                color: isUrgent ? 'error.contrastText' : 'primary.contrastText',
+              }}
+            >
+              <CalendarIcon fontSize="small" />
+            </Box>
             <Typography 
               variant="body2" 
               color={isUrgent ? 'error.main' : 'text.primary'}
-              fontWeight={isUrgent ? 'medium' : 'normal'}
+              fontWeight={isUrgent ? 600 : 400}
             >
               {deadlineText}
             </Typography>
           </Box>
 
-          {/* Provider */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <SchoolIcon color="primary" fontSize="small" />
-            <Typography variant="body2">
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 32,
+                height: 32,
+                borderRadius: 1,
+                backgroundColor: 'grey.100',
+                color: 'text.primary',
+              }}
+            >
+              <SchoolIcon fontSize="small" />
+            </Box>
+            <Typography variant="body2" color="text.secondary">
               {scholarship.provider}
             </Typography>
           </Box>
 
-          {/* Location */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <LocationIcon color="secondary" fontSize="small" />
-            <Typography variant="body2">
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 32,
+                height: 32,
+                borderRadius: 1,
+                backgroundColor: 'secondary.light',
+                color: 'secondary.contrastText',
+              }}
+            >
+              <LocationIcon fontSize="small" />
+            </Box>
+            <Typography variant="body2" color="text.secondary">
               {scholarship.location}
             </Typography>
           </Box>
@@ -122,26 +206,33 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
 
         {/* Eligibility chips */}
         {scholarship.eligibility.length > 0 && (
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="caption" color="text.secondary" gutterBottom display="block">
-              Eligibility:
+          <Box sx={{ mt: 3 }}>
+            <Typography variant="caption" color="text.secondary" gutterBottom display="block" sx={{ mb: 1 }}>
+              Eligibility Requirements:
             </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {scholarship.eligibility.slice(0, 3).map((criteria, index) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {scholarship.eligibility.slice(0, 2).map((criteria, index) => (
                 <Chip
                   key={index}
                   label={criteria}
                   size="small"
+                  icon={<CheckIcon sx={{ fontSize: 16 }} />}
                   variant="outlined"
-                  color="secondary"
+                  sx={{
+                    borderColor: 'success.main',
+                    color: 'success.main',
+                    '& .MuiChip-icon': {
+                      color: 'success.main',
+                    },
+                  }}
                 />
               ))}
-              {scholarship.eligibility.length > 3 && (
+              {scholarship.eligibility.length > 2 && (
                 <Chip
-                  label={`+${scholarship.eligibility.length - 3} more`}
+                  label={`+${scholarship.eligibility.length - 2} more`}
                   size="small"
                   variant="outlined"
-                  color="secondary"
+                  sx={{ color: 'text.secondary' }}
                 />
               )}
             </Box>
@@ -150,15 +241,19 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
       </CardContent>
 
       {/* Actions */}
-      <CardActions sx={{ px: 2, pb: 2 }}>
+      <CardActions sx={{ p: 3, pt: 0 }}>
         <Button
           variant="contained"
-          color="primary"
           startIcon={<LinkIcon />}
           onClick={handleApplyClick}
           disabled={!scholarship.applicationUrl}
           fullWidth
-          sx={{ textTransform: 'none' }}
+          sx={{ 
+            textTransform: 'none',
+            py: 1.5,
+            fontWeight: 600,
+            borderRadius: 2,
+          }}
         >
           {scholarship.applicationUrl ? 'Apply Now' : 'Application Unavailable'}
         </Button>
