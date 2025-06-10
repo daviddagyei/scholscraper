@@ -27,7 +27,7 @@ interface ScholarshipCardProps {
 }
 
 /**
- * Modern scholarship card with enhanced visual design
+ * Modern scholarship card with consistent dimensions
  */
 const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
   const { text: deadlineText, isUrgent } = formatDeadline(scholarship.deadline);
@@ -49,7 +49,8 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
     <Card 
       elevation={0}
       sx={{ 
-        height: '100%', 
+        height: 520, // Fixed height for consistency
+        width: '100%',
         display: 'flex', 
         flexDirection: 'column',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -63,12 +64,15 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
         },
       }}
     >
-      {/* Header with gradient background */}
+      {/* Header with gradient background - Fixed height */}
       <Box
         sx={{
           background: `linear-gradient(135deg, ${getProviderColor(scholarship.provider)}15 0%, ${getProviderColor(scholarship.provider)}25 100%)`,
           p: 3,
           pb: 2,
+          minHeight: 120,
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
@@ -79,12 +83,25 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
               height: 48,
               fontSize: '1.2rem',
               fontWeight: 600,
+              flexShrink: 0,
             }}
           >
             {scholarship.provider.charAt(0)}
           </Avatar>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 1 }}>
+            <Typography 
+              variant="h6" 
+              component="h3" 
+              sx={{ 
+                fontWeight: 600, 
+                mb: 1,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                lineHeight: 1.3,
+              }}
+            >
               {scholarship.title}
             </Typography>
             <Chip 
@@ -100,8 +117,8 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
         </Box>
       </Box>
 
-      <CardContent sx={{ flexGrow: 1, pt: 0 }}>
-        {/* Description */}
+      <CardContent sx={{ flexGrow: 1, pt: 2, pb: 1, display: 'flex', flexDirection: 'column' }}>
+        {/* Description - Fixed height with overflow handling */}
         <Typography 
           variant="body2" 
           color="text.secondary" 
@@ -112,13 +129,14 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
             WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
+            height: '4.8em', // Fixed height for 3 lines
           }}
         >
           {scholarship.description}
         </Typography>
 
-        {/* Key details with modern icons */}
-        <Stack spacing={2}>
+        {/* Key details with modern icons - Fixed spacing */}
+        <Stack spacing={1.5} sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Box
               sx={{
@@ -130,6 +148,7 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
                 borderRadius: 1,
                 backgroundColor: 'success.light',
                 color: 'success.contrastText',
+                flexShrink: 0,
               }}
             >
               <MoneyIcon fontSize="small" />
@@ -150,6 +169,7 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
                 borderRadius: 1,
                 backgroundColor: isUrgent ? 'error.light' : 'primary.light',
                 color: isUrgent ? 'error.contrastText' : 'primary.contrastText',
+                flexShrink: 0,
               }}
             >
               <CalendarIcon fontSize="small" />
@@ -174,11 +194,20 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
                 borderRadius: 1,
                 backgroundColor: 'grey.100',
                 color: 'text.primary',
+                flexShrink: 0,
               }}
             >
               <SchoolIcon fontSize="small" />
             </Box>
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+              variant="body2" 
+              color="text.secondary"
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {scholarship.provider}
             </Typography>
           </Box>
@@ -194,21 +223,30 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
                 borderRadius: 1,
                 backgroundColor: 'secondary.light',
                 color: 'secondary.contrastText',
+                flexShrink: 0,
               }}
             >
               <LocationIcon fontSize="small" />
             </Box>
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+              variant="body2" 
+              color="text.secondary"
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {scholarship.location}
             </Typography>
           </Box>
         </Stack>
 
-        {/* Eligibility chips */}
+        {/* Eligibility chips - Fixed height section */}
         {scholarship.eligibility.length > 0 && (
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 'auto', minHeight: 60 }}>
             <Typography variant="caption" color="text.secondary" gutterBottom display="block" sx={{ mb: 1 }}>
-              Eligibility Requirements:
+              Eligibility:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               {scholarship.eligibility.slice(0, 2).map((criteria, index) => (
@@ -224,15 +262,19 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
                     '& .MuiChip-icon': {
                       color: 'success.main',
                     },
+                    fontSize: '0.75rem',
                   }}
                 />
               ))}
               {scholarship.eligibility.length > 2 && (
                 <Chip
-                  label={`+${scholarship.eligibility.length - 2} more`}
+                  label={`+${scholarship.eligibility.length - 2}`}
                   size="small"
                   variant="outlined"
-                  sx={{ color: 'text.secondary' }}
+                  sx={{ 
+                    color: 'text.secondary',
+                    fontSize: '0.75rem',
+                  }}
                 />
               )}
             </Box>
@@ -240,8 +282,8 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({ scholarship }) => {
         )}
       </CardContent>
 
-      {/* Actions */}
-      <CardActions sx={{ p: 3, pt: 0 }}>
+      {/* Actions - Fixed height */}
+      <CardActions sx={{ p: 3, pt: 0, mt: 'auto' }}>
         <Button
           variant="contained"
           startIcon={<LinkIcon />}

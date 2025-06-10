@@ -22,7 +22,7 @@ interface ScholarshipListProps {
 }
 
 /**
- * Component for displaying a list of scholarships in a grid layout
+ * Component for displaying a list of scholarships in a grid layout with consistent card sizes
  */
 const ScholarshipList: React.FC<ScholarshipListProps> = ({
   scholarships,
@@ -108,10 +108,22 @@ const ScholarshipList: React.FC<ScholarshipListProps> = ({
         </Box>
       )}
 
-      {/* Scholarship grid */}
+      {/* Scholarship grid with consistent card heights */}
       <Grid container spacing={3}>
         {scholarships.map((scholarship) => (
-          <Grid item xs={12} sm={6} lg={4} key={scholarship.id}>
+          <Grid 
+            item 
+            xs={12} 
+            sm={6} 
+            lg={4} 
+            key={scholarship.id}
+            sx={{
+              display: 'flex',
+              '& > *': {
+                width: '100%',
+              }
+            }}
+          >
             <ScholarshipCard scholarship={scholarship} />
           </Grid>
         ))}
