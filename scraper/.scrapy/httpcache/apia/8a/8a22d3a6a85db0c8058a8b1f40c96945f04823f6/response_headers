@@ -1,0 +1,25 @@
+Date: Wed, 11 Jun 2025 04:38:10 GMT
+Content-Type: text/html; charset=UTF-8
+Cf-Ray: 94de6adc2a4898c3-ORD
+Cf-Cache-Status: DYNAMIC
+Cache-Control: no-store, no-cache, must-revalidate
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Set-Cookie: PHPSESSID=937643554c24c1b532d131ed9a84927d; path=/
+Set-Cookie: __cf_bm=DI_HdwHW0X4Sd6f4IDCIFKsFU3dNllGm8aYIZulE3SA-1749616690-1.0.1.1-U_l0Wtxuans7yNENHQ2t4oVrgjp8ZThzgMgi5Mx544vzBDlahZeF7wRZLZnqzclOXUu1EmaA69avUw8.o7lflOUIgFrzAWEYT90YjArtHRs; path=/; expires=Wed, 11-Jun-25 05:08:10 GMT; domain=.apiascholars.org; HttpOnly; Secure; SameSite=None
+Vary: Accept-Encoding
+Pragma: no-cache
+Ki-Cache-Type: None
+Ki-Cf-Cache-Status: BYPASS
+Ki-Edge: v=21.0.1;mv=4.1.6
+X-Content-Type-Options: nosniff
+X-Dlm-No-Waypoints: true
+X-Edge-Location-Klb: 1
+X-Kinsta-Cache: HIT
+X-Tec-Api-Origin: https://apiascholars.org
+X-Tec-Api-Root: https://apiascholars.org/wp-json/tribe/events/v1/
+X-Tec-Api-Version: v1
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=%2FLFIO4gXdok9SKZu%2BoznnSBqR%2Feu3gjADe0j736i063U3ss1bodtrTRctYZPKiqPYgtml9x2l2NPD7zA%2F8Z0XfSYiJsH2RAI95WCw9CF5qSz2UEhKjfVIOKs0GEdBnTuXlg%3D"}],"group":"cf-nel","max_age":604800}
+Nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+Content-Encoding: gzip
+Alt-Svc: h3=":443"; ma=86400

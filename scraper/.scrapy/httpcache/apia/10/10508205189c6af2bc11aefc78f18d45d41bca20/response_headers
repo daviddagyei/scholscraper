@@ -1,0 +1,17 @@
+Content-Length: 162
+Date: Wed, 11 Jun 2025 04:37:56 GMT
+Content-Type: text/html
+Location: https://apiascholars.org/scholarships/undergraduate
+Cf-Ray: 94de6a822dd3de7e-ORD
+Cf-Cache-Status: DYNAMIC
+Ki-Cache-Type: None
+Ki-Cf-Cache-Status: BYPASS
+Ki-Edge: v=21.0.1;mv=4.1.6
+X-Content-Type-Options: nosniff
+X-Edge-Location-Klb: 1
+Set-Cookie: __cf_bm=k6gEXwJDqb0vaR6HSDQhFqyvoZStZ3dmWO8zKl_o7sA-1749616676-1.0.1.1-kjht6wLc2AEMdcO_xiZwL5wLWGVWMcvvyMFXTxYnJqu.HyK5K9A5YUh34fnGWj5XADyrDrp0FbFSkwZZWqHqzK5DvViQAsAyGfq8gUc92mM; path=/; expires=Wed, 11-Jun-25 05:07:56 GMT; domain=.www.apiascholars.org; HttpOnly; Secure; SameSite=None
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=pyh4sst743nKpJoEdXo6%2FaZULKJhfWS6DW%2FXCAsNDDB2DXwuxneL1wcY%2FHlV05c1vGevp8Y2%2FZci9z%2BjqbsclLuMANXMiIklwn0GYGjeNHSMevIszHUu6H62mkKJxt0Hkodvx%2Bnf"}],"group":"cf-nel","max_age":604800}
+Nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Vary: Accept-Encoding
+Server: cloudflare
+Alt-Svc: h3=":443"; ma=86400

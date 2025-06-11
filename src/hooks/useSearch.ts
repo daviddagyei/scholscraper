@@ -9,7 +9,6 @@ import { isDateInRange } from '../utils/dateUtils';
 const initialFilters: SearchFilters = {
   searchTerm: '',
   category: '',
-  location: '',
   minAmount: 0,
   maxAmount: 100000,
   deadlineFrom: null,
@@ -42,14 +41,12 @@ export const useSearch = (scholarships: Scholarship[]) => {
    */
   const filterOptions = useMemo(() => {
     const categories = [...new Set(scholarships.map(s => s.category))].sort();
-    const locations = [...new Set(scholarships.map(s => s.location))].sort();
     const eligibilityOptions = [...new Set(
       scholarships.flatMap(s => s.eligibility)
     )].sort();
 
     return {
       categories,
-      locations,
       eligibilityOptions,
     };
   }, [scholarships]);
@@ -78,11 +75,6 @@ export const useSearch = (scholarships: Scholarship[]) => {
     result = result.filter(scholarship => {
       // Category filter
       if (filters.category && scholarship.category !== filters.category) {
-        return false;
-      }
-
-      // Location filter
-      if (filters.location && scholarship.location !== filters.location) {
         return false;
       }
 
@@ -124,7 +116,6 @@ export const useSearch = (scholarships: Scholarship[]) => {
     filteredCount: filteredScholarships.length,
     hasActiveFilters: filters.searchTerm.trim() !== '' || 
                      filters.category !== '' || 
-                     filters.location !== '' ||
                      filters.minAmount > 0 ||
                      filters.maxAmount < 100000 ||
                      filters.deadlineFrom !== null ||

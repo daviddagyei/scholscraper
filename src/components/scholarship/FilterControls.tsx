@@ -31,7 +31,6 @@ interface FilterControlsProps {
   onReset: () => void;
   filterOptions: {
     categories: string[];
-    locations: string[];
     eligibilityOptions: string[];
   };
   isCompact?: boolean;
@@ -49,7 +48,6 @@ const FilterControls: React.FC<FilterControlsProps> = ({
 }) => {
   const hasActiveFilters = 
     filters.category !== '' ||
-    filters.location !== '' ||
     filters.minAmount > 0 ||
     filters.maxAmount < 100000 ||
     filters.deadlineFrom !== null ||
@@ -72,25 +70,6 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               {filterOptions.categories.map((category) => (
                 <MenuItem key={category} value={category}>
                   {category}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-
-        {/* Location Filter */}
-        <Box sx={{ flex: '1 1 200px', minWidth: '200px' }}>
-          <FormControl fullWidth size="small">
-            <InputLabel>Location</InputLabel>
-            <Select
-              value={filters.location}
-              label="Location"
-              onChange={(e) => onFiltersChange({ location: e.target.value })}
-            >
-              <MenuItem value="">All Locations</MenuItem>
-              {filterOptions.locations.map((location) => (
-                <MenuItem key={location} value={location}>
-                  {location}
                 </MenuItem>
               ))}
             </Select>

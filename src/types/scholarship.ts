@@ -33,7 +33,6 @@ export interface RawScholarshipData {
 export interface SearchFilters {
   searchTerm: string;
   category: string;
-  location: string;
   minAmount: number;
   maxAmount: number;
   deadlineFrom: Date | null;
