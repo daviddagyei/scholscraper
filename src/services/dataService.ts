@@ -1,107 +1,108 @@
 import axios from 'axios';
-import Papa from 'papaparse';
-import type { Scholarship, RawScholarshipData } from '../types/scholarship';
-import { parseDate } from '../utils/dateUtils';
+import type { Scholarship } from '../types/scholarship';
 
 /**
- * Service for fetching and processing scholarship data from Google Sheets
+ * API Response interface matching backend format
+ */
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
+/**
+ * Service for fetching scholarship data from the backend API
  */
 class DataService {
-  private readonly csvUrl: string;
+  private readonly apiBaseUrl: string;
+  private readonly axiosInstance;
 
-  constructor(csvUrl?: string) {
-    // Default to a sample URL - replace with your actual Google Sheets CSV URL
-    this.csvUrl = csvUrl || import.meta.env.VITE_REACT_APP_SHEETS_URL || '';
+  constructor() {
+    this.apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001';
+    
+    // Create axios instance with default configuration
+    this.axiosInstance = axios.create({
+      baseURL: this.apiBaseUrl,
+      timeout: parseInt(import.meta.env.VITE_API_TIMEOUT) || 10000,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   /**
-   * Fetches scholarship data from Google Sheets CSV
+   * Fetches scholarship data from the backend API
    */
   async fetchScholarships(): Promise<Scholarship[]> {
     try {
-      if (!this.csvUrl) {
-        console.warn('No CSV URL provided, returning dummy data');
-        return this.generateDummyData();
+      const response = await this.axiosInstance.get<ApiResponse<Scholarship[]>>('/api/public/scholarships');
+      
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Failed to fetch scholarships');
       }
 
-      const response = await axios.get(this.csvUrl, {
-        timeout: 10000,
-        headers: {
-          'Accept': 'text/csv',
-        },
-      });
+      // Transform dates from string to Date objects
+      const scholarships = response.data.data.map(scholarship => ({
+        ...scholarship,
+        deadline: new Date(scholarship.deadline)
+      }));
 
-      return this.parseCSVData(response.data);
-    } catch (error) {
-      console.error('Error fetching scholarship data:', error);
-      // Fallback to dummy data for development
+      console.log(`✅ Fetched ${scholarships.length} scholarships from API`);
+      
+      if (scholarships.length > 0) {
+        console.log('📄 Sample scholarship:', scholarships[0].title);
+        if (scholarships[0].title === 'Tech Excellence Scholarship') {
+          console.log('🎯 SUCCESS: Receiving LIVE data from Google Sheets!');
+        }
+      }
+      
+      return scholarships;
+    } catch (error: any) {
+      console.error('❌ Error fetching scholarship data from API:', error);
+      console.error('❌ Full error details:', {
+        message: error?.message,
+        stack: error?.stack,
+        response: error?.response?.data,
+        status: error?.response?.status
+      });
+      
+      // If API fails, return dummy data for development
+      console.warn('⚠️ Falling back to dummy data due to API error');
       return this.generateDummyData();
     }
   }
 
   /**
-   * Parses CSV string data into Scholarship objects
+   * Fetches available scholarship categories from the backend
    */
-  private parseCSVData(csvData: string): Scholarship[] {
-    const parseResult = Papa.parse<RawScholarshipData>(csvData, {
-      header: true,
-      skipEmptyLines: true,
-      transformHeader: (header: string) => header.trim(),
-    });
-
-    if (parseResult.errors.length > 0) {
-      console.warn('CSV parsing errors:', parseResult.errors);
-    }
-
-    return parseResult.data
-      .map((row, index) => this.transformRawData(row, index))
-      .filter((scholarship): scholarship is Scholarship => scholarship !== null);
-  }
-
-  /**
-   * Transforms raw CSV data into Scholarship object
-   */
-  private transformRawData(raw: RawScholarshipData, index: number): Scholarship | null {
+  async fetchCategories(): Promise<string[]> {
     try {
-      const deadline = parseDate(raw.Deadline);
-      if (!deadline) {
-        console.warn(`Invalid deadline for scholarship at row ${index + 1}:`, raw.Deadline);
-        return null;
+      const response = await this.axiosInstance.get<ApiResponse<string[]>>('/api/public/categories');
+      
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Failed to fetch categories');
       }
 
-      return {
-        id: `scholarship-${index + 1}`,
-        title: raw.Title?.trim() || 'Untitled Scholarship',
-        description: raw.Description?.trim() || 'No description available',
-        amount: raw.Amount?.trim() || 'Amount not specified',
-        deadline,
-        eligibility: this.parseArrayField(raw.Eligibility),
-        requirements: this.parseArrayField(raw.Requirements),
-        applicationUrl: raw['Application URL']?.trim() || '',
-        provider: raw.Provider?.trim() || 'Unknown Provider',
-        location: 'United States', // Fixed to US-based scholarships only
-        category: raw.Category?.trim() || 'General',
-        isActive: raw.Status?.toLowerCase() !== 'inactive',
-      };
+      return response.data.data;
     } catch (error) {
-      console.error(`Error transforming row ${index + 1}:`, error, raw);
-      return null;
+      console.error('Error fetching categories from API:', error);
+      
+      // Return default categories as fallback
+      return [
+        'Academic Merit',
+        'Community Service', 
+        'Entrepreneurship',
+        'Diversity & Inclusion',
+        'Environmental',
+        'Need-Based',
+        'STEM',
+        'Arts & Humanities'
+      ];
     }
   }
 
   /**
-   * Parses comma-separated string into array
-   */
-  private parseArrayField(field: string): string[] {
-    if (!field) return [];
-    return field
-      .split(',')
-      .map(item => item.trim())
-      .filter(item => item.length > 0);
-  }
-
-  /**
-   * Generates dummy data for development and testing
+   * Generates dummy data for development and testing when API is unavailable
    */
   private generateDummyData(): Scholarship[] {
     const currentYear = new Date().getFullYear();

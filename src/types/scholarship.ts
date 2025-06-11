@@ -14,21 +14,6 @@ export interface Scholarship {
   isActive: boolean;
 }
 
-// Raw CSV data interface (before processing)
-export interface RawScholarshipData {
-  Title: string;
-  Description: string;
-  Amount: string;
-  Deadline: string;
-  Eligibility: string;
-  Requirements: string;
-  'Application URL': string;
-  Provider: string;
-  Location: string;
-  Category: string;
-  Status: string;
-}
-
 // Search and filter interfaces
 export interface SearchFilters {
   searchTerm: string;
