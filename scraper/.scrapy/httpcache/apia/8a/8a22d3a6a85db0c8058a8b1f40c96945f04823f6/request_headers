@@ -1,8 +1,0 @@
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Dnt: 1
-Connection: keep-alive
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
-Cookie: PHPSESSID=c4466af179c892984243b6609b05880d; __cf_bm=5fGazRq5oX.IHkaBF4tESg9MHqseTbsE4jeO3zM2sEk-1749616682-1.0.1.1-312L2iEzOFXad0ae6i6WMh50tERbpolbHKyZ1ywwonBQAbUczQnCqUCfNhpo2TlaVd4OFAVxfgxAcM1vlv0a8vCAiSWYfsu_Y7EsKpQGbP0
