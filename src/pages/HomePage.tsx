@@ -50,7 +50,7 @@ const HomePage: React.FC = () => {
   }, 0);
 
   return (
-    <Layout title="Scholarship Database">
+    <Layout title="Scholarship Hub">
       <Box>
         {/* Hero Section */}
         <Fade in timeout={800}>
@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
                 fontWeight: 700,
               }}
             >
-              Find Your Perfect Scholarship
+              Your Scholarship Search Starts Here
             </Typography>
             
             <Typography 

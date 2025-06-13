@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
-import { School as SchoolIcon } from '@mui/icons-material';
+
 
 interface HeaderProps {
   title?: string;
@@ -9,25 +9,32 @@ interface HeaderProps {
 /**
  * Application header component with modern design
  */
-const Header: React.FC<HeaderProps> = ({ title = 'Scholarship Database' }) => {
+const Header: React.FC<HeaderProps> = ({ title = 'Scholarship Hub' }) => {
   return (
     <AppBar position="static" elevation={0}>
-      <Container maxWidth="xl">
-        <Toolbar sx={{ py: 1 }}>
+      <Container maxWidth="xl" sx={{ pl: { xs: 1, sm: 2 } }}>
+        <Toolbar sx={{ py: 1, pl: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: 48,
                 height: 48,
                 borderRadius: 2,
                 background: 'rgba(255, 255, 255, 0.1)',
                 backdropFilter: 'blur(10px)',
+                px: 1,
               }}
             >
-              <SchoolIcon sx={{ fontSize: 28, color: 'white' }} />
+              <img 
+                src="/palouse-pathways-logo.png" 
+                alt="Palouse Pathways Logo" 
+                style={{ 
+                  height: 40, 
+                  width: 'auto'
+                }} 
+              />
             </Box>
             <Box>
               <Typography 
