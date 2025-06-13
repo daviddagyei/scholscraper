@@ -21,6 +21,7 @@ import {
 // Import controllers
 import * as authController from './controllers/authController';
 import * as scholarshipController from './controllers/scholarshipController';
+import { ScholarshipAgentController } from './controllers/scholarshipAgentController';
 
 // Import services
 import { googleSheetsService } from './services/googleSheetsService';
@@ -35,6 +36,7 @@ app.use(cors({
     process.env.FRONTEND_URL || 'http://localhost:5173',
     'http://localhost:5176',
     'http://localhost:5174',
+    'http://127.0.0.1:5174', // Add this line
     'http://localhost:5175'
   ],
   credentials: true,
@@ -185,6 +187,70 @@ app.get('/api/admin/categories',
   authenticateToken,
   authorize('super_admin', 'admin', 'editor', 'viewer'),
   scholarshipController.getCategories
+);
+
+// ============================================================================
+// SCHOLARSHIP AGENT ROUTES (AI-powered discovery)
+// ============================================================================
+
+const scholarshipAgentController = new ScholarshipAgentController();
+
+// Get agent status
+app.get('/api/admin/agent/status',
+  authenticateToken,
+  authorize('super_admin', 'admin', 'editor', 'viewer'),
+  async (req, res) => {
+    try {
+      const status = scholarshipAgentController.getAgentStatus();
+      res.json({
+        success: true,
+        data: status
+      });
+    } catch (error) {
+      console.error('Error getting agent status:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to get agent status'
+      });
+    }
+  }
+);
+
+// Run scholarship discovery
+app.post('/api/admin/agent/discover',
+  authenticateToken,
+  authorize('super_admin', 'admin', 'editor'),
+  async (req, res) => {
+    try {
+      const { searchCriteria } = req.body;
+      console.log('Starting scholarship discovery via API...');
+      
+      const result = await scholarshipAgentController.runDiscovery(searchCriteria);
+      
+      if (result.success) {
+        res.json({
+          success: true,
+          message: 'Scholarship discovery completed',
+          data: {
+            scholarships_discovered: result.scholarships_discovered,
+            scholarships_saved: result.scholarships_saved
+          }
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Scholarship discovery failed',
+          error: result.error
+        });
+      }
+    } catch (error) {
+      console.error('Error running scholarship discovery:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to run scholarship discovery'
+      });
+    }
+  }
 );
 
 // ============================================================================
