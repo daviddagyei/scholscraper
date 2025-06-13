@@ -72,7 +72,9 @@ export interface CreateUserRequest {
 // Audit and logging interfaces
 export interface AuditAction {
   timestamp: Date;
-  action: 'created' | 'updated' | 'deleted' | 'status_changed' | 'login' | 'logout';
+  action: 'created' | 'updated' | 'deleted' | 'status_changed' | 'login' | 'logout' | 
+          'agent_discovery' | 'data_quality_issue' | 'agent_started' | 'agent_completed' | 
+          'agent_failed' | 'batch_import' | 'duplicate_detected' | 'agent_error' | 'agent_log';
   scholarshipId?: string;
   userEmail: string;
   changesMade?: string;

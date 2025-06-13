@@ -52,6 +52,13 @@ app.use(express.urlencoded({ extended: true }));
 // Rate limiting
 app.use('/api/', apiLimiter);
 
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Welcome to the Scholarship Admin API. Please use specific endpoints like /health or /api/...',
+    timestamp: new Date().toISOString() 
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
